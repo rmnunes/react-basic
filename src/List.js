@@ -1,16 +1,17 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { setInterval } from 'timers';
+import PropTypes from 'prop-types';
+
+function FormattedDate(props) {
+    return <h1>This is {props.date2.toLocaleTimeString()}</h1>
+}
 
 export class List extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            legal: new Date(),
-            counter: new Number()
-        }
-        this.onClick = this.onClick.bind(this);
-        console.log(this.state)
+    state = {
+        legal: new Date(),
+        date: new Date("1/1/1900"),
+        counter: 0
     }
 
     componentDidMount() {
@@ -29,7 +30,7 @@ export class List extends Component {
         });
     }
 
-    onClick() {
+    onClick = () => {
         this.setState({
             counter: this.state.counter + 1
         });
@@ -41,10 +42,17 @@ export class List extends Component {
                 <p>HI</p>
                 <button onClick={this.onClick}>OK</button>
                 <p>{this.state.legal.toLocaleTimeString()}</p>
-                <p>ok</p>
+                <FormattedDate date2={this.state.date} />
+                {this.props.passit.tittle}
+                <br/>
+                {this.state.counter}
             </div>
         )
     }
+}
+
+List.propTypes = {
+    passit: PropTypes.object.isRequired
 }
 
 export default List
